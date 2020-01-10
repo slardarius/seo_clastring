@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  nodejs:
+    build:
+      context: nodejs_server
+    environment:
+      DB_URL: mongodb://mongodb:27017/clusters
+    hostname: nodejshost
+    tty: true
+    restart: always
+    links:
+    - mongodb
+    - python_server
+    depends_on:
+    - mongodb
+    - python_server
+    ports:
+      - 5000:5000
+  mongodb:
+    image: mongo
+    volumes:
+      - ./mongo_data:/data/db
+  python_server:
+    build:
+      context: python_server
+  web_client:
+    build: 
+      context: web_client
+    ports:
+      - 8080:8080
+      
