@@ -1,0 +1,26 @@
+{
+  "name": "coe-core",
+  "version": "1.0.0",
+  "description": "this is test apllication for ceo-core",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js",
+    "startbd": "mongod"
+  },
+  "author": "artem zapaschikov",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.16.4",
+    "google-trends-api": "^4.9.0",
+    "nodemon": "^1.19.0"
+  },
+  "devDependencies": {
+    "executive": "^1.6.3",
+    "mongodb": "^3.2.6",
+    "mongoose": "^5.8.1",
+    "request": "^2.88.0"
+  }
+}
