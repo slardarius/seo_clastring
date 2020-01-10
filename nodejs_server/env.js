@@ -1,1 +1,1 @@
-export default endpoint = 'http://python_server:4000';
+module.exports = 'http://python_server:4000';
