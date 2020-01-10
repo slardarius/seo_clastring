@@ -231,7 +231,7 @@
             },
 
             async onTakeInfoAboutClusters() {
-                const { body: responce } = await this.$http.get(`http://localhost:5000/api/v1/k_means_cluster?query_string=${this.query}&count_cluster=${this.countClusters}&date_from=${this.dateFrom}&date_to=${this.dateTo}`);
+                const { body: responce } = await this.$http.get(`http://nodejshost:5000/api/v1/k_means_cluster?query_string=${this.query}&count_cluster=${this.countClusters}&date_from=${this.dateFrom}&date_to=${this.dateTo}`);
                 if (responce.success === 0) {
                     this.initialData = responce.result['phrases'];
                     this.clustersKeys = Object.keys(responce.result['clustered_data']);
@@ -241,7 +241,7 @@
             },
 
             async onLoadCriterions() {
-                const { body: responce } = await this.$http.get(`http://localhost:5000/api/v1/k_means_criterion?range=${this.countClusters}`);
+                const { body: responce } = await this.$http.get(`http://nodejshost:5000/api/v1/k_means_criterion?range=${this.countClusters}`);
                 if (responce.success === 0) {
                     console.log(responce.result);
                     this.datacollection = {
