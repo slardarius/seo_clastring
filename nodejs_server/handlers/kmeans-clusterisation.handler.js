@@ -1,5 +1,6 @@
 const googleTrends = require('google-trends-api');
 const axios = require('axios');
+const env = require('../env');
 
 class Cluster {
     constructor() {
@@ -21,7 +22,7 @@ class Cluster {
                         });
                     });
                     this.currentListOfPhrases = listOfPhrases;
-                    const {data: response} = await axios.post('http://127.0.0.1:4000/api/v1/statistics/k_means', { phrases: listOfPhrases.filter(Boolean), count_cluster, });
+                    const {data: response} = await axios.post(env + '/api/v1/statistics/k_means', { phrases: listOfPhrases.filter(Boolean), count_cluster, });
                     console.log(response);
                     res.status(200).send({
                         success: 0,
@@ -40,7 +41,7 @@ class Cluster {
     async onGetClusterEvaluation(req, res) {
         if (this.currentListOfPhrases.length) {
             const range = req.query['range'];
-            const {data: response} = await axios.post('http://127.0.0.1:4000/api/v1/statistics/criterion', { range: +range+1 || 8, phrases: this.currentListOfPhrases.filter(Boolean), });
+            const {data: response} = await axios.post(env + '/api/v1/statistics/criterion', { range: +range+1 || 8, phrases: this.currentListOfPhrases.filter(Boolean), });
             res.status(200).send({
                 success: 0,
                 result: response,

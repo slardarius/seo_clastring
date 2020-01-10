@@ -12,7 +12,6 @@ from flask import Flask, jsonify
 from flask import request
 import json
 from flask import abort
-import numpy as np
 
 m = MorphAnalyzer()
 current_phrases = [];

@@ -1,5 +1,6 @@
 const googleTrends = require('google-trends-api');
 const axios = require('axios');
+const env = require('../env');
 
 
 module.exports = (req, res) => {
@@ -13,7 +14,7 @@ module.exports = (req, res) => {
             phrases.push(...element);
         });
         try {
-            const response = await axios.post('http://127.0.0.1:4000/api/v1/statistics/', {phrases: phrases});
+            const response = await axios.post(env + '/api/v1/statistics/', {phrases: phrases});
             res.status(200).send({
                 success: 0,
                 result: response,
