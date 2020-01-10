@@ -19,7 +19,7 @@ speed-measure-plugin.json
 *.launch
 .settings/
 *.sublime-workspace
-
+mongo_data/
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json

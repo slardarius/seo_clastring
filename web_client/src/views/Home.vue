@@ -57,7 +57,7 @@ export default {
               text: this.search_value,
               date: moment().toISOString()
           };
-          const {body: responce } = await this.$http.post('http://nodejshost:5000/api/v1/save_request', body);
+          const {body: responce } = await this.$http.post('http://localhost:5000/api/v1/save_request', body);
           this.search_value = '';
           if (responce.success === 0) {
               this.last_searches.unshift(responce.result);

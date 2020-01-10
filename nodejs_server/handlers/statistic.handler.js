@@ -4,6 +4,7 @@ const env = require('../env');
 module.exports = (req, res, customRequests) => {
     customRequests.find(undefined, async (err, result) => {
         const phrases = result.slice().map(x => x['text']);
+        console.log(phrases);
         const {data: response} = await axios.post( env + '/api/v1/statistics/', {phrases: phrases.filter(Boolean)});
         console.log(response);
         res.status(200).send({

@@ -12,7 +12,7 @@ const clusterHandler = new clusterClass();
 const MongoCluster = require('../DataBase/mongoDB');
 const customRequests = new MongoCluster().onGetSchema();
 const PORT_PYTHON_SERVER = 4000;
-const URL_PYTHON_SERVER = 'http://127.0.0.1:';
+const URL_PYTHON_SERVER = 'http://python_server:4000';
 
 /* ROUTING */
 router.get('/api/v1/statistics_geo', statisticGeoHandler);

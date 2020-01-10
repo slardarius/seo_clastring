@@ -26,7 +26,7 @@ def funcVectorizer(_phrases):
     m = pymorphy2.MorphAnalyzer()
     tfidf_v = TfidfVectorizer(min_df=1)
     cv = CountVectorizer(min_df=1)
-    cv2 = CountVectorizer(min_df=2)
+    cv2 = CountVectorizer(min_df=1)
     phrases = _phrases;
 
     x = cv.fit_transform(phrases)
@@ -72,6 +72,8 @@ def index_router():
 @app.route('/api/v1/statistics/', methods=['POST'])
 def index():
     phrases = request.get_json('phrases')['phrases']
+    print(request.get_json('phrases'))
+    print(phrases)
     vaectorizer_data = funcVectorizer(phrases)
     column = vaectorizer_data.columns.tolist()
     rows = phrases
@@ -112,4 +114,4 @@ def create_criterion():
     })
 
 if __name__ == '__main__':
-    app.run(port=4000, debug='true')
+    app.run(host='0.0.0.0', port=4000, debug='true')

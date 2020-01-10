@@ -15,5 +15,5 @@ RUN npm install
 # Скопировать исходники приложения
 COPY . /app
 
-EXPOSE 8080
+EXPOSE 5000
 CMD [ "node", "index.js" ]
