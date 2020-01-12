@@ -7,13 +7,20 @@ class Cluster {
         this.currentListOfPhrases = [];
     }
 
-    onGetClusters(req, res) {
+    onGetClusters(req, res, customRequests) {
         try {
-            const query_string = req.query['query_string'];
+            const mock_data = JSON.parse(req.query['mock']);
+            let query_string = undefined;
+            let date_from = undefined;
+            let date_to = undefined;
             const count_cluster = req.query['count_cluster'];
-            const date_from = req.query['date_from'];
-            const date_to = req.query['date_to'];
-            googleTrends.relatedQueries({ keyword: (query_string || 'Украина'), startTime: new Date(date_from), endTime: new Date(date_to) })
+            console.log(mock_data);
+            if (mock_data) {
+                query_string = req.query['query_string'];
+                date_from = req.query['date_from'];
+                date_to = req.query['date_to'];
+                //
+                googleTrends.relatedQueries({ keyword: (query_string || 'Украина'), startTime: new Date(date_from), endTime: new Date(date_to) })
                 .then(async (results) => {
                     const listOfPhrases = [];
                     JSON.parse(results)['default']['rankedList'].forEach(item => {
@@ -23,7 +30,6 @@ class Cluster {
                     });
                     this.currentListOfPhrases = listOfPhrases;
                     const {data: response} = await axios.post(env + '/api/v1/statistics/k_means', { phrases: listOfPhrases.filter(Boolean), count_cluster, });
-                    console.log(response);
                     res.status(200).send({
                         success: 0,
                         result: {
@@ -32,6 +38,27 @@ class Cluster {
                         },
                     });
                 })
+            } else {
+                console.log('HERE');
+                customRequests.find(undefined, async (error, result) => {
+                    if (error) {
+                        res.status(500).send({
+                            success: -1,
+                            result: 'Can\'t returns cors.'
+                        });
+                    }
+                    const listOfPhrases = result.slice().map(phrase => phrase.text);
+                    this.currentListOfPhrases = listOfPhrases;
+                    const {data: response} = await axios.post(env + '/api/v1/statistics/k_means', { phrases: listOfPhrases.filter(Boolean), count_cluster, });
+                    res.status(200).send({
+                        success: 0,
+                        result: {
+                            clustered_data: response['responce'],
+                            phrases: listOfPhrases,
+                        },
+                    });
+                });
+            }
         } catch (e) {
             console.error(e);
             res.status(500).send({ success: 1, message: e });

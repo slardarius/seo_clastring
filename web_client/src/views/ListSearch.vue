@@ -46,6 +46,7 @@
 
 <script>
     import * as moment from 'moment';
+    import apiBaseUrl from '../../environment/environment';
     export default {
         name: 'list_search',
         data() {
@@ -58,7 +59,7 @@
         },
         methods: {
               async onSendRequest(current_page = 1) {
-                  const { body: responce } = await this.$http.get(`http://localhost:5000/api/v1/get_all_request?page=${current_page}&count=20`);
+                  const { body: responce } = await this.$http.get(apiBaseUrl + `/api/v1/get_all_request?page=${current_page}&count=20`);
                   if (responce.success === 0) {
                       this.list_of_request = responce.result.core.map(request => {
                           request.date = moment(request.date).format('DD-MM-YYYY HH:mm');

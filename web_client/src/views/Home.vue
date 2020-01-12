@@ -38,8 +38,7 @@
 
 <script>
     import * as moment from 'moment';
-// @ is an alias to /src
-// import HelloWorld from "@/components/HelloWorld.vue";
+    import apiBaseUrl from '../../environment/environment';
 
 export default {
   name: "home",
@@ -57,12 +56,12 @@ export default {
               text: this.search_value,
               date: moment().toISOString()
           };
-          const {body: responce } = await this.$http.post('http://localhost:5000/api/v1/save_request', body);
+          const {body: responce } = await this.$http.post(apiBaseUrl + '/api/v1/save_request', body);
           this.search_value = '';
           if (responce.success === 0) {
-              this.last_searches.unshift(responce.result);
+              this.last_searches.unshift(...responce.result);
           } else {
-              this.error_list.unshift(responce.result);
+              this.error_list.unshift(...responce.result);
           }
       }
     }

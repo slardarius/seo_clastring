@@ -12,7 +12,6 @@
           <router-link class="nav-item nav-link" to="/list_search">Request list</router-link>
           <router-link class="nav-item nav-link" to="/statistics">Vectorisation</router-link>
           <router-link class="nav-item nav-link" to="/kmeans">Kmeans</router-link>
-          <router-link class="nav-item nav-link" to="/kmeans">Kmeans</router-link>
         </div>
       </div>
     </nav>

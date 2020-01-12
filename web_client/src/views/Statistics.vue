@@ -29,6 +29,7 @@
 </style>
 
 <script>
+    import apiBaseUrl from '../../environment/environment';
     export default {
         name: 'statistics',
         data() {
@@ -40,7 +41,7 @@
         },
         methods: {
             async onSendRequest() {
-                const { body: responce } = await this.$http.get('http://localhost:5000/api/v1/statistics');
+                const { body: responce } = await this.$http.get( apiBaseUrl + '/api/v1/statistics');
                 if (responce.success === 0) {
                     this.list_of_header = responce.result.column;
                     this.list_of_columns = responce.result.rows;

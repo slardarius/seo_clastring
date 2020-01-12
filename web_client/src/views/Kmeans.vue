@@ -1,9 +1,13 @@
 <template>
     <div class="kmeans__wrapper">
         <div class="kmeans__left-side">
+            <label>
+                Mock data
+                <input type="checkbox" v-model="isMockData">
+            </label>
             <div class="kmeans__filter">
                 <div class="needs-validation">
-                    <div class="form-row">
+                    <div class="form-row" v-if="isMockData">
                         <div class="kmeans__filter-control">
                             <label for="validationTooltip01">Input query </label>
                             <input v-model="query"
@@ -28,7 +32,7 @@
                     </div>
                     
                     
-                    <div class="form-row">
+                    <div class="form-row" v-if="isMockData">
                         <div class="kmeans__filter-control">
                             <label for="validationTooltip01">Input date FROM: </label>
                             <input  v-model="dateFrom"
@@ -41,7 +45,7 @@
                     </div>
                     
                     
-                    <div class="form-row">
+                    <div class="form-row" v-if="isMockData">
                         <div class="kmeans__filter-control">
                             <label for="validationTooltip01">Input date TO: </label>
                             <input  v-model="dateTo"
@@ -195,7 +199,8 @@
 </style>
 
 <script>
-    import LineChart from './LineChar'
+    import LineChart from './LineChar';
+    import apiBaseUrl from '../../environment/environment';
     export default {
         name: 'list_search',
         components: {
@@ -203,8 +208,9 @@
         },
         data() {
             return {
+                isMockData: true,
                 query: 'Украина',
-                countClusters: '6',
+                countClusters: '2',
                 dateFrom: '2019-12-01',
                 dateTo: '2019-12-18',
                 isShowError: false,
@@ -231,7 +237,7 @@
             },
 
             async onTakeInfoAboutClusters() {
-                const { body: responce } = await this.$http.get(`http://localhost:5000/api/v1/k_means_cluster?query_string=${this.query}&count_cluster=${this.countClusters}&date_from=${this.dateFrom}&date_to=${this.dateTo}`);
+                const { body: responce } = await this.$http.get(apiBaseUrl + `/api/v1/k_means_cluster?query_string=${this.query}&count_cluster=${this.countClusters}&date_from=${this.dateFrom}&date_to=${this.dateTo}&mock=${this.isMockData}`);
                 if (responce.success === 0) {
                     this.initialData = responce.result['phrases'];
                     this.clustersKeys = Object.keys(responce.result['clustered_data']);
@@ -241,7 +247,7 @@
             },
 
             async onLoadCriterions() {
-                const { body: responce } = await this.$http.get(`http://localhost:5000/api/v1/k_means_criterion?range=${this.countClusters}`);
+                const { body: responce } = await this.$http.get(apiBaseUrl + `/api/v1/k_means_criterion?range=${this.countClusters}`);
                 if (responce.success === 0) {
                     console.log(responce.result);
                     this.datacollection = {
